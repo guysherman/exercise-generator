@@ -46,15 +46,50 @@ namespace exgen
 		char *resPrefix = getenv("EXGEN_RES_PREFIX");
 		sprintf(&filePath[0], "%s/MainWindow.glade", resPrefix);
 		builder = Gtk::Builder::create_from_file(filePath);
-		//Gtk::Button *button = nullptr;
-		//builder->get_widget("button", button);
-		//button->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::onButtonClicked));
+		Gtk::Button *button = nullptr;
+		builder->get_widget("generateButton", button);
 
+		if (button != nullptr)
+		{
+			button->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::onButtonClicked));
+		}
 	}
 
 	void MainWindow::onButtonClicked()
 	{
-		std::cout << "Hello World" << std::endl;
+		Gtk::ComboBox *keyCombo = nullptr;
+		builder->get_widget("keyCombo", keyCombo);
+		if (keyCombo != nullptr)
+		{
+			Gtk::TreeModel::iterator iter = keyCombo->get_active();
+			if (iter != nullptr)
+			{
+				Gtk::TreeModel::Row row = *iter;
+				if (row != nullptr)
+				{
+					gint id = row[ls1Cols.Id];
+					Glib::ustring keyName = row[ls1Cols.KeyName];
+					std::cout << "Selected key is: {" << id << ", " << keyName << "}" << std::endl;
+				}
+			}
+		}
+
+		Gtk::ComboBox *scaleCombo = nullptr;
+		builder->get_widget("scaleCombo", scaleCombo);
+		if (scaleCombo != nullptr)
+		{
+			auto iter = scaleCombo->get_active();
+			if (iter != nullptr)
+			{
+				auto row = *iter;
+				if (row != nullptr)
+				{
+					gint id = row[ls2Cols.Id];
+					Glib::ustring scaleName = row[ls2Cols.ScaleName];
+					std::cout << "Selected scale is: {" << id << ", " << scaleName << "}" << std::endl;
+				}
+			}
+		}
 	}
 
 	MainWindow::~MainWindow() {}
