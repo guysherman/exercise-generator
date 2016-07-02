@@ -38,6 +38,32 @@
 
 namespace exgen
 {
+	class LS1Columns : public Gtk::TreeModel::ColumnRecord
+	{
+	public:
+		LS1Columns()
+		{
+			this->add(this->KeyName);
+			this->add(this->Id);
+		}
+
+		Gtk::TreeModelColumn<Glib::ustring> KeyName;
+		Gtk::TreeModelColumn<gint> Id;
+	};
+
+	class LS2Columns : public Gtk::TreeModel::ColumnRecord
+	{
+	public:
+		LS2Columns()
+		{
+			this->add(this->Id);
+			this->add(this->ScaleName);
+		}
+
+		Gtk::TreeModelColumn<gint> Id;
+		Gtk::TreeModelColumn<Glib::ustring> ScaleName;
+	};
+
 	class MainWindow
 	{
 	public:
@@ -52,8 +78,12 @@ namespace exgen
 
 		// Member Widgets
 		Glib::RefPtr<Gtk::Builder> builder;
+		LS1Columns ls1Cols;
+		LS2Columns ls2Cols;
 
 	};
+
+
 }
 
 #endif // __MAINWINDOW_HXX__
