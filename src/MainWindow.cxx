@@ -46,9 +46,9 @@ namespace exgen
 		char *resPrefix = getenv("EXGEN_RES_PREFIX");
 		sprintf(&filePath[0], "%s/MainWindow.glade", resPrefix);
 		builder = Gtk::Builder::create_from_file(filePath);
-		Gtk::Button *button = nullptr;
-		builder->get_widget("button", button);
-		button->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::onButtonClicked));
+		//Gtk::Button *button = nullptr;
+		//builder->get_widget("button", button);
+		//button->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::onButtonClicked));
 
 	}
 
