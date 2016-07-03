@@ -79,6 +79,10 @@
         <col id="0">0</col>
         <col id="1" translatable="yes">Major</col>
       </row>
+      <row>
+        <col id="0">1</col>
+        <col id="1" translatable="yes">Minor</col>
+      </row>
     </data>
   </object>
   <object class="GtkListStore" id="liststore3">
