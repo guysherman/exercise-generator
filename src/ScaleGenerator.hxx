@@ -16,18 +16,16 @@
   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 */
-
-#ifndef __MAJORSCALEGENERATOR_HXX__
-#define __MAJORSCALEGENERATOR_HXX__
+#ifndef __SCALEGENERATOR_HXX__
+#define __SCALEGENERATOR_HXX__
 
 // C++ Standard Headers
 #include <cstdint>
-#include <cstddef>
 #include <memory>
 // C Standard Headers
 
-
 // Boost Headers
+
 
 // 3rd Party Headers
 
@@ -36,21 +34,21 @@
 
 
 // Our Headers
-#include "ScaleGenerator.hxx"
 
 namespace exgen
 {
-	class MajorScaleGenerator : public ScaleGenerator
+	class ScaleGenerator
 	{
 	public:
+		virtual ~ScaleGenerator() {}
 
-		MajorScaleGenerator();
-		virtual ~MajorScaleGenerator();
+		std::unique_ptr<uint8_t> generateExercise(uint8_t key, uint8_t baseOctave, uint8_t numOctaves, size_t exerciseLength);
+
+	protected:
+		uint8_t numNotes;
+		uint8_t *scaleNotes;
 	};
 }
 
 
-
-
-
-#endif // __MAJORSCALEGENERATOR_HXX__
+#endif // __SCALEGENERATOR_HXX__

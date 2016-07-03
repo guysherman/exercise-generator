@@ -17,15 +17,12 @@
 
 */
 
-#ifndef __MAJORSCALEGENERATOR_HXX__
-#define __MAJORSCALEGENERATOR_HXX__
-
 // C++ Standard Headers
-#include <cstdint>
-#include <cstddef>
-#include <memory>
+#include <cstring>
+#include <cstdlib>
+#include <iostream>
 // C Standard Headers
-
+#include <time.h>
 
 // Boost Headers
 
@@ -36,21 +33,24 @@
 
 
 // Our Headers
-#include "ScaleGenerator.hxx"
+#include "MinorScaleGenerator.hxx"
 
 namespace exgen
 {
-	class MajorScaleGenerator : public ScaleGenerator
+	MinorScaleGenerator::MinorScaleGenerator()
 	{
-	public:
+		uint8_t notes[7] = {0, 2, 3, 5, 7, 8, 10};
+		scaleNotes = new uint8_t[7];
+		numNotes = 7;
+		memcpy(scaleNotes, &notes[0], numNotes);
+	}
 
-		MajorScaleGenerator();
-		virtual ~MajorScaleGenerator();
-	};
+	MinorScaleGenerator::~MinorScaleGenerator()
+	{
+		if (scaleNotes)
+			delete[] scaleNotes;
+		scaleNotes = nullptr;
+	}
+
+
 }
-
-
-
-
-
-#endif // __MAJORSCALEGENERATOR_HXX__

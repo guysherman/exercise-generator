@@ -36,6 +36,7 @@
 // Our Headers
 #include "MainWindow.hxx"
 #include "MajorScaleGenerator.hxx"
+#include "MinorScaleGenerator.hxx"
 #include "MidiExporter.hxx"
 
 namespace grsgtkutil
@@ -101,29 +102,41 @@ namespace exgen
 	{
 
 		auto selectedKey = grsgtkutil::getSelectedValueFromCombo("keyCombo", builder);
-		std::cout << "Selected key is {" << selectedKey.first << ", " << selectedKey.second << "}" << std::endl;
+		//std::cout << "Selected key is {" << selectedKey.first << ", " << selectedKey.second << "}" << std::endl;
 
 
 		auto selectedScale = grsgtkutil::getSelectedValueFromCombo("scaleCombo", builder);
-		std::cout << "Selected scale is: {" << selectedScale.first << ", " << selectedScale.second << "}" << std::endl;
+		//std::cout << "Selected scale is: {" << selectedScale.first << ", " << selectedScale.second << "}" << std::endl;
 
 		auto selectedOctave = grsgtkutil::getSelectedValueFromCombo("startingOctaveCombo", builder);
-		std::cout << "Selected ocatve is: {" << selectedOctave.first << ", " << selectedOctave.second << "}" << std::endl;
+		//std::cout << "Selected ocatve is: {" << selectedOctave.first << ", " << selectedOctave.second << "}" << std::endl;
 
 		Gtk::SpinButton *numOctavesSpin = nullptr;
 		builder->get_widget("numOctaves", numOctavesSpin);
 		auto numOctaves = numOctavesSpin->get_adjustment()->get_value();
-		std::cout << "Selected number of octaves is: " << (int)numOctaves << std::endl;
+		//std::cout << "Selected number of octaves is: " << (int)numOctaves << std::endl;
 
-		MajorScaleGenerator gen;
-		std::unique_ptr<uint8_t> exercise = gen.generateExercise((uint8_t)selectedKey.first, (uint8_t)selectedOctave.first, (uint8_t)numOctaves, 96);
+		ScaleGenerator *gen = nullptr;
 
-		for (int i = 0; i < 96; ++i)
+		switch (selectedScale.first)
 		{
-			std::cout << (int) exercise.get()[i] << ", ";
+			case 1:
+				gen = new MinorScaleGenerator();
+				break;
+			case 0:
+			default:
+				gen = new MajorScaleGenerator();
+				break;
 		}
 
-		std::cout << std::endl;
+		std::unique_ptr<uint8_t> exercise = gen->generateExercise((uint8_t)selectedKey.first, (uint8_t)selectedOctave.first, (uint8_t)numOctaves, 96);
+
+		// for (int i = 0; i < 96; ++i)
+		// {
+		// 	std::cout << (int) exercise.get()[i] << ", ";
+		// }
+		//
+		// std::cout << std::endl;
 
 		Gtk::FileChooserDialog dialog("Please choose an file to save to", Gtk::FILE_CHOOSER_ACTION_SAVE);
 		Gtk::Window *window = GetWindow();
@@ -140,23 +153,26 @@ namespace exgen
 		{
 			case(Gtk::RESPONSE_OK):
 			{
-				std::cout << "File selected: " << dialog.get_filename() << std::endl;
+				//std::cout << "File selected: " << dialog.get_filename() << std::endl;
 				MidiExporter::ExportExerciseToMidiFile(exercise.get(), 96, dialog.get_filename().c_str());
 				break;
 			}
 			case(Gtk::RESPONSE_CANCEL):
 			{
-				std::cout << "Cancel clicked." << std::endl;
+				//std::cout << "Cancel clicked." << std::endl;
 				break;
 			}
 			default:
 			{
-				std::cout << "Unexpected button clicked." << std::endl;
+				//std::cout << "Unexpected button clicked." << std::endl;
 				break;
 			}
 		}
 
-
+		if (gen != nullptr)
+		{
+			delete gen;
+		}
 
 
 	}

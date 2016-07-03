@@ -16,14 +16,11 @@
   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 */
-
-#ifndef __MAJORSCALEGENERATOR_HXX__
-#define __MAJORSCALEGENERATOR_HXX__
+#ifndef __MINORSCALEGENERATOR_HXX__
+#define __MINORSCALEGENERATOR_HXX__
 
 // C++ Standard Headers
-#include <cstdint>
-#include <cstddef>
-#include <memory>
+
 // C Standard Headers
 
 
@@ -40,17 +37,14 @@
 
 namespace exgen
 {
-	class MajorScaleGenerator : public ScaleGenerator
+	class MinorScaleGenerator : public ScaleGenerator
 	{
 	public:
 
-		MajorScaleGenerator();
-		virtual ~MajorScaleGenerator();
+		MinorScaleGenerator();
+		virtual ~MinorScaleGenerator();
 	};
 }
 
 
-
-
-
-#endif // __MAJORSCALEGENERATOR_HXX__
+#endif // __MINORSCALEGENERATOR_HXX__

@@ -52,27 +52,5 @@ namespace exgen
 		scaleNotes = nullptr;
 	}
 
-	std::unique_ptr<uint8_t> MajorScaleGenerator::generateExercise(uint8_t keyNote, uint8_t baseOctave, uint8_t numOctaves, size_t exerciseLength)
-	{
-		auto exercise = std::unique_ptr<uint8_t>(new uint8_t[exerciseLength]);
-		memset(exercise.get(), 0, exerciseLength);
-
-		srand(time(NULL));
-
-		uint8_t midiBaseNote = baseOctave + keyNote;
-
-
-		for (int i = 0; i < exerciseLength; ++i)
-		{
-			uint8_t random = rand() % (numNotes * numOctaves);
-			uint8_t dividend = random / numNotes;
-			uint8_t rem = random % numNotes;
-			uint8_t noteOffset = (dividend * 12) + scaleNotes[rem];
-			uint8_t note = midiBaseNote + noteOffset;
-			exercise.get()[i] = note;
-			//std::cout << "midiBaseNote= " << (int)midiBaseNote << ", random=" << (int)random << ", dividend=" << (int)dividend << ", rem=" << (int)rem << ", noteOffset=" << (int)noteOffset << ", note=" << (int)note << std::endl;
-		}
-
-		return exercise;
-	}
+	
 }

@@ -18,51 +18,51 @@
     </columns>
     <data>
       <row>
-        <col id="0">0</col>
+        <col id="0">5</col>
         <col id="1" translatable="yes">F</col>
       </row>
       <row>
-        <col id="0">1</col>
+        <col id="0">0</col>
         <col id="1" translatable="yes">C</col>
       </row>
       <row>
-        <col id="0">2</col>
+        <col id="0">7</col>
         <col id="1" translatable="yes">G</col>
       </row>
       <row>
-        <col id="0">3</col>
+        <col id="0">2</col>
         <col id="1" translatable="yes">D</col>
       </row>
       <row>
-        <col id="0">4</col>
+        <col id="0">9</col>
         <col id="1" translatable="yes">A</col>
       </row>
       <row>
-        <col id="0">5</col>
+        <col id="0">4</col>
         <col id="1" translatable="yes">E</col>
       </row>
       <row>
-        <col id="0">6</col>
+        <col id="0">11</col>
         <col id="1" translatable="yes">B</col>
       </row>
       <row>
-        <col id="0">7</col>
+        <col id="0">10</col>
         <col id="1" translatable="yes">Bb / A#</col>
       </row>
       <row>
-        <col id="0">8</col>
+        <col id="0">3</col>
         <col id="1" translatable="yes">Eb / D#</col>
       </row>
       <row>
-        <col id="0">9</col>
+        <col id="0">8</col>
         <col id="1" translatable="yes">Ab / G#</col>
       </row>
       <row>
-        <col id="0">10</col>
+        <col id="0">1</col>
         <col id="1" translatable="yes">Db / C#</col>
       </row>
       <row>
-        <col id="0">11</col>
+        <col id="0">6</col>
         <col id="1" translatable="yes">Gb / F#</col>
       </row>
     </data>
