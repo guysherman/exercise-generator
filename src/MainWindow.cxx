@@ -36,6 +36,7 @@
 // Our Headers
 #include "MainWindow.hxx"
 #include "MajorScaleGenerator.hxx"
+#include "MidiExporter.hxx"
 
 namespace grsgtkutil
 {
@@ -123,6 +124,40 @@ namespace exgen
 		}
 
 		std::cout << std::endl;
+
+		Gtk::FileChooserDialog dialog("Please choose an file to save to", Gtk::FILE_CHOOSER_ACTION_SAVE);
+		Gtk::Window *window = GetWindow();
+		dialog.set_transient_for(*window);
+
+		//Add response buttons the the dialog:
+		dialog.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
+		dialog.add_button("Select", Gtk::RESPONSE_OK);
+
+		int result = dialog.run();
+
+		//Handle the response:
+		switch(result)
+		{
+			case(Gtk::RESPONSE_OK):
+			{
+				std::cout << "File selected: " << dialog.get_filename() << std::endl;
+				MidiExporter::ExportExerciseToMidiFile(exercise.get(), 96, dialog.get_filename().c_str());
+				break;
+			}
+			case(Gtk::RESPONSE_CANCEL):
+			{
+				std::cout << "Cancel clicked." << std::endl;
+				break;
+			}
+			default:
+			{
+				std::cout << "Unexpected button clicked." << std::endl;
+				break;
+			}
+		}
+
+
+
 
 	}
 
