@@ -19,7 +19,7 @@
 
 // C++ Standard Headers
 #include <iostream>
-
+#include <utility>
 
 // C Standard Headers
 
@@ -35,7 +35,48 @@
 
 // Our Headers
 #include "MainWindow.hxx"
+#include "MajorScaleGenerator.hxx"
 
+namespace grsgtkutil
+{
+	class LS1Columns : public Gtk::TreeModel::ColumnRecord
+	{
+	public:
+		LS1Columns()
+		{
+			this->add(this->Key);
+			this->add(this->Value);
+		}
+
+		Gtk::TreeModelColumn<gint> Key;
+		Gtk::TreeModelColumn<Glib::ustring> Value;
+	};
+
+	LS1Columns kvpCols;
+
+	std::pair<gint, Glib::ustring> getSelectedValueFromCombo(const char* comboId, Glib::RefPtr<Gtk::Builder> builder)
+	{
+		std::pair<gint, Glib::ustring> result(-1, "");
+		Gtk::ComboBox *combo = nullptr;
+		builder->get_widget(comboId, combo);
+		if (combo != nullptr)
+		{
+			Gtk::TreeModel::iterator iter = combo->get_active();
+			if (iter != nullptr)
+			{
+				Gtk::TreeModel::Row row = *iter;
+				if (row != nullptr)
+				{
+					gint key = row[kvpCols.Key];
+					Glib::ustring value = row[kvpCols.Value];
+					result = std::pair<gint, Glib::ustring>(key, value);
+				}
+			}
+		}
+
+		return result;
+	}
+}
 
 namespace exgen
 {
@@ -57,39 +98,32 @@ namespace exgen
 
 	void MainWindow::onButtonClicked()
 	{
-		Gtk::ComboBox *keyCombo = nullptr;
-		builder->get_widget("keyCombo", keyCombo);
-		if (keyCombo != nullptr)
+
+		auto selectedKey = grsgtkutil::getSelectedValueFromCombo("keyCombo", builder);
+		std::cout << "Selected key is {" << selectedKey.first << ", " << selectedKey.second << "}" << std::endl;
+
+
+		auto selectedScale = grsgtkutil::getSelectedValueFromCombo("scaleCombo", builder);
+		std::cout << "Selected scale is: {" << selectedScale.first << ", " << selectedScale.second << "}" << std::endl;
+
+		auto selectedOctave = grsgtkutil::getSelectedValueFromCombo("startingOctaveCombo", builder);
+		std::cout << "Selected ocatve is: {" << selectedOctave.first << ", " << selectedOctave.second << "}" << std::endl;
+
+		Gtk::SpinButton *numOctavesSpin = nullptr;
+		builder->get_widget("numOctaves", numOctavesSpin);
+		auto numOctaves = numOctavesSpin->get_adjustment()->get_value();
+		std::cout << "Selected number of octaves is: " << (int)numOctaves << std::endl;
+
+		MajorScaleGenerator gen;
+		std::unique_ptr<uint8_t> exercise = gen.generateExercise((uint8_t)selectedKey.first, (uint8_t)selectedOctave.first, (uint8_t)numOctaves, 96);
+
+		for (int i = 0; i < 96; ++i)
 		{
-			Gtk::TreeModel::iterator iter = keyCombo->get_active();
-			if (iter != nullptr)
-			{
-				Gtk::TreeModel::Row row = *iter;
-				if (row != nullptr)
-				{
-					gint id = row[ls1Cols.Id];
-					Glib::ustring keyName = row[ls1Cols.KeyName];
-					std::cout << "Selected key is: {" << id << ", " << keyName << "}" << std::endl;
-				}
-			}
+			std::cout << (int) exercise.get()[i] << ", ";
 		}
 
-		Gtk::ComboBox *scaleCombo = nullptr;
-		builder->get_widget("scaleCombo", scaleCombo);
-		if (scaleCombo != nullptr)
-		{
-			auto iter = scaleCombo->get_active();
-			if (iter != nullptr)
-			{
-				auto row = *iter;
-				if (row != nullptr)
-				{
-					gint id = row[ls2Cols.Id];
-					Glib::ustring scaleName = row[ls2Cols.ScaleName];
-					std::cout << "Selected scale is: {" << id << ", " << scaleName << "}" << std::endl;
-				}
-			}
-		}
+		std::cout << std::endl;
+
 	}
 
 	MainWindow::~MainWindow() {}

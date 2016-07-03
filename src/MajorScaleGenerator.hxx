@@ -16,11 +16,14 @@
   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 */
-#ifndef __MAINWINDOW_HXX__
-#define __MAINWINDOW_HXX__
+
+#ifndef __MAJORSCALEGENERATOR_HXX__
+#define __MAJORSCALEGENERATOR_HXX__
 
 // C++ Standard Headers
-
+#include <cstdint>
+#include <cstddef>
+#include <memory>
 // C Standard Headers
 
 
@@ -30,33 +33,28 @@
 
 
 // GTK Headers
-#include <gtkmm.h>
-
 
 
 // Our Headers
 
 namespace exgen
 {
-
-	class MainWindow
+	class MajorScaleGenerator
 	{
 	public:
-		MainWindow();
-		virtual ~MainWindow();
 
-		Gtk::Window *GetWindow();
+		MajorScaleGenerator();
+		virtual ~MajorScaleGenerator();
 
-	protected:
-		// Signal Handlers
-		void onButtonClicked();
+		std::unique_ptr<uint8_t> generateExercise(uint8_t keyNote, uint8_t baseOctave, uint8_t numOctaves, size_t exerciseLength);
 
-		// Member Widgets
-		Glib::RefPtr<Gtk::Builder> builder;
-
+		uint8_t numNotes;
+		uint8_t *scaleNotes;
 	};
-
-
 }
 
-#endif // __MAINWINDOW_HXX__
+
+
+
+
+#endif // __MAJORSCALEGENERATOR_HXX__
