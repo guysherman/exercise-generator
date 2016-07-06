@@ -10,7 +10,7 @@ PROJ_MAJOR_VERSION 	=	'0'
 
 
 VERSION = PROJ_VERSION
-APPNAME = 'my_proj'
+APPNAME = 'exercise-generator'
 
 top = '.'
 out = 'build'
@@ -60,7 +60,7 @@ def build(bld):
 				includes = ['./include', './dep/buffer/include'],
 				cxxflags=['-Werror', '-pedantic-errors'],
 				lib = libs,
-				target = 'myproj',
+				target = 'exercise-generator',
 				install_path = '${BINDIR}',
 				defines = defines,
 				use=['JDKSMIDI', 'GTKMM'],
