@@ -2,6 +2,14 @@
 
 This is a tool for generating practice exercises for musical instruments. I'm creating it because I am trying to sight-read guitar, but I have been learning scales by patterns so I need something that fits within a scale but forces me to *read* the music rather than just picking the "position" from the key signature and starting note.
 
+## Downloaded a prebuilt releast?
+
+Make sure you've got gtkmm3.0 installed.
+
+```
+$ sudo ./install.sh
+```
+
 ## Get the code
 
 ```
