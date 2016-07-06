@@ -38,3 +38,7 @@ reports/
 # MIDI files
 *.mid
 *.midi
+
+# Other stuff
+dist/
+*.gz

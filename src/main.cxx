@@ -40,13 +40,14 @@ extern char **environ;
 int main(int argc, char **argv)
 {
 	auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
-	exgen::MainWindow window;
+
 
 	setenv("EXGEN_RES_PREFIX", RES_PREFIX, 0);
+	std::cout << "RES_PREFIX=" << RES_PREFIX << std::endl;
 	char *resPrefix = getenv("EXGEN_RES_PREFIX");
 	std::cout << "EXGEN_RES_PREFIX=" << resPrefix << std::endl;
 
-
+	exgen::MainWindow window;
 
 	return app->run(*(window.GetWindow()));
 }
