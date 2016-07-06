@@ -40,7 +40,8 @@ namespace exgen
 	class ScaleGenerator
 	{
 	public:
-		virtual ~ScaleGenerator() {}
+		ScaleGenerator(uint8_t *scaleNotes, uint8_t numNotes);
+		virtual ~ScaleGenerator();
 
 		std::unique_ptr<uint8_t> generateExercise(uint8_t key, uint8_t baseOctave, uint8_t numOctaves, size_t exerciseLength);
 

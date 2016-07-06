@@ -35,6 +35,21 @@
 
 namespace exgen
 {
+	ScaleGenerator::ScaleGenerator(uint8_t *scaleNotes, uint8_t numNotes)
+	{
+		this->scaleNotes = new uint8_t[numNotes];
+		memset(&this->scaleNotes[0], 0, numNotes);
+		memcpy(&this->scaleNotes[0], &scaleNotes[0], numNotes);
+		this->numNotes = numNotes;
+	}
+
+	ScaleGenerator::~ScaleGenerator()
+	{
+		if (scaleNotes)
+			delete[] scaleNotes;
+		scaleNotes = nullptr;
+	}
+
 	std::unique_ptr<uint8_t> ScaleGenerator::generateExercise(uint8_t keyNote, uint8_t baseOctave, uint8_t numOctaves, size_t exerciseLength)
 	{
 		auto exercise = std::unique_ptr<uint8_t>(new uint8_t[exerciseLength]);

@@ -35,8 +35,7 @@
 
 // Our Headers
 #include "MainWindow.hxx"
-#include "MajorScaleGenerator.hxx"
-#include "MinorScaleGenerator.hxx"
+#include "ScaleGenerator.hxx"
 #include "MidiExporter.hxx"
 
 namespace grsgtkutil
@@ -121,11 +120,18 @@ namespace exgen
 		switch (selectedScale.first)
 		{
 			case 1:
-				gen = new MinorScaleGenerator();
+				{
+					uint8_t notes[7] = {0, 2, 3, 5, 7, 8, 10};
+					gen = new ScaleGenerator(notes, 7);
+				}
 				break;
 			case 0:
 			default:
-				gen = new MajorScaleGenerator();
+				{
+					uint8_t notes[7] = {0, 2, 4, 5, 7, 9, 11};
+					gen = new ScaleGenerator(notes, 7);
+
+				}
 				break;
 		}
 
