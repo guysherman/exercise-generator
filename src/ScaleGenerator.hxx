@@ -19,10 +19,15 @@
 #ifndef __SCALEGENERATOR_HXX__
 #define __SCALEGENERATOR_HXX__
 
+#include "../build/config.h"
+
 // C++ Standard Headers
 #include <cstdint>
 #include <memory>
 // C Standard Headers
+#ifdef HAVE_TIMEH
+#include <time.h>
+#endif
 
 // Boost Headers
 

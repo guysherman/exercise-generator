@@ -60,7 +60,7 @@ namespace exgen
 		uint8_t midiBaseNote = baseOctave + keyNote;
 
 
-		for (int i = 0; i < exerciseLength; ++i)
+		for (size_t i = 0; i < exerciseLength; ++i)
 		{
 			uint8_t random = rand() % (numNotes * numOctaves);
 			uint8_t dividend = random / numNotes;
