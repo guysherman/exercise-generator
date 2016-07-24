@@ -4,6 +4,7 @@
 
 import subprocess
 import waftools
+import sys
 
 PROJ_VERSION			=	'0.0.1'
 PROJ_MAJOR_VERSION 	=	'0'
@@ -15,6 +16,12 @@ APPNAME = 'exercise-generator'
 top = '.'
 out = 'build'
 libs = ['pthread', 'boost_system', 'gtkmm-3.0']
+libs_test = ['pthread', 'boost_system']
+if sys.platform == 'win32':
+	libs = ['pthread', 'boost_system-mt', 'gtkmm-3.0']
+if sys.platform == 'win32':
+	libs_test = ['pthread', 'boost_system-mt']
+
 
 defines = ''
 
@@ -42,7 +49,12 @@ def configure(conf):
 	conf.env.INCLUDES_JDKSMIDI = ['./dep/jdksmidi/include']
 	conf.env.LIB_JDKSMIDI = ['jdksmidi']
 	conf.check_cfg(package='gtkmm-3.0', uselib_store='GTKMM', args=['--cflags', '--libs'])
-	if conf.options.prefix:
+	conf.check(header_name="arpa/inet.h", mandatory=False, define_name="HAVE_ARPA_INET")
+	conf.check(header_name="winsock2.h", mandatory=False, define_name="HAVE_WINSOCK")
+	conf.check(header_name="time.h", mandatory=False, define_name="HAVE_TIMEH")
+	if sys.platform=='win32':
+		conf.define('RES_PREFIX', './res')
+	elif conf.options.prefix:
 		conf.define('RES_PREFIX', conf.options.prefix + 'share/exercise-generator/res')
 	else:
 		conf.define('RES_PREFIX', '/usr/local/share/exercise-generator/res')
@@ -56,9 +68,12 @@ def build(bld):
 	#for r in resources:
 	#	print("Copying", r.abspath())
 	#	bld(rule="mkdir -p res && cp -R  ${SRC} res/", source=r)
+	cxx_flags = []
+	if sys.platform != 'win32':
+		cxx_flags=['-Werror', '-pedantic-errors']
 	bld.program(source = bld.path.ant_glob('src/**/*.cxx'),
 				includes = ['./include', './dep/buffer/include'],
-				cxxflags=['-Werror', '-pedantic-errors'],
+				cxxflags=cxx_flags,
 				lib = libs,
 				target = 'exercise-generator',
 				install_path = '${BINDIR}',
@@ -69,7 +84,7 @@ def build(bld):
 	bld.program(source = bld.path.ant_glob('tests/**/*.cxx'),
 				includes = ['./include', './src', './dep/wq/include', './dep/buffer/include'],
 				cxxflags=['-w'],
-				lib = ['pthread', 'boost_system'],
+				lib = libs_test,
 				target = 'tests/all',
 				install_path = '${BINDIR}',
 				defines = defines,
