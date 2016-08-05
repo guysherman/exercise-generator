@@ -33,6 +33,7 @@
 build/
 reports/
 .waf-*
+waf-*
 .lock-waf*
 
 # MIDI files
@@ -42,3 +43,4 @@ reports/
 # Other stuff
 dist/
 *.gz
+venv/

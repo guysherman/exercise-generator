@@ -18,11 +18,18 @@
 */
 
 // C++ Standard Headers
+#include "../build/config.h"
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include <cstdint>
+#ifdef HAVE_ARPA_INET
 #include <arpa/inet.h>
+#elif HAVE_WINSOCK
+#include <winsock2.h>
+#else
+#error "Sockets header with htons not found"
+#endif
 
 // C Standard Headers
 
@@ -128,7 +135,7 @@ namespace exgen
 
 		    // we add note 1: press and release in (dt) ticks
 
-			for (int i = 0; i < exerciseLength; ++i)
+			for (size_t i = 0; i < exerciseLength; ++i)
 			{
 				m.SetTime( t );
 			    m.SetNoteOn( chan = 0, note = exercise[i], velocity = 100 );
