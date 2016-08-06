@@ -55,7 +55,10 @@ def configure(conf):
 	if sys.platform=='win32':
 		conf.define('RES_PREFIX', './res')
 	elif conf.options.prefix:
-		conf.define('RES_PREFIX', conf.options.prefix + 'share/exercise-generator/res')
+		if conf.options.prefix.endswith('/'):
+			conf.define('RES_PREFIX', conf.options.prefix + 'share/exercise-generator/res')
+		else:
+			conf.define('RES_PREFIX', conf.options.prefix + '/share/exercise-generator/res')
 	else:
 		conf.define('RES_PREFIX', '/usr/local/share/exercise-generator/res')
 	conf.write_config_header('config.h')

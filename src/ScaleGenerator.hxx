@@ -29,6 +29,10 @@
 #include <time.h>
 #endif
 
+#ifdef __APPLE__
+#include <stdlib.h>
+#endif
+
 // Boost Headers
 
 

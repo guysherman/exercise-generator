@@ -44,3 +44,4 @@ waf-*
 dist/
 *.gz
 venv/
+.DS_Store
